@@ -1,8 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.0.2"
+    id("org.springframework.boot") version "3.0.0"
     id("io.spring.dependency-management") version "1.1.0"
+    id("org.asciidoctor.convert") version "1.5.8"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.jpa") version "1.7.22"
@@ -27,6 +28,20 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testImplementation("org.springframework.restdocs:spring-restdocs-asciidoctor")
+}
+
+val snippetsDir by extra { file("build/generated-snippets") }
+
+tasks.test {
+    outputs.dir(snippetsDir)
+}
+
+tasks.asciidoctor {
+    inputs.dir(snippetsDir)
+    //dependsOn(test)
+    dependsOn(tasks.test) // 변경
 }
 
 tasks.withType<KotlinCompile> {
