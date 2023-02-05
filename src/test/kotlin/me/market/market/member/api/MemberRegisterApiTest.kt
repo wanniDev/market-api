@@ -2,8 +2,10 @@ package me.market.market.member.api
 
 import me.market.market.AbstractTest
 import me.market.market.common.API_URI_PREFIX
+import me.market.market.member.api.request.MemberRegisterReq
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.operation.preprocess.Preprocessors
@@ -15,7 +17,15 @@ class MemberRegisterApiTest: AbstractTest() {
     @Test
     @DisplayName("회원가입 동작 테스트")
     fun currentJvmMilliseconds() {
-        val result = mockMvc.perform(RestDocumentationRequestBuilders.post("$API_URI_PREFIX/member"))
+        val joinRequest = MemberRegisterReq("신한은행", "111-111-111111", "LGU+", "010-1234-5678", "aaaabbbbaa")
+        val reqBody = objectMapper.writeValueAsString(joinRequest)
+
+        val result = mockMvc.perform(
+            RestDocumentationRequestBuilders.post("$API_URI_PREFIX/member")
+                .content(reqBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
 
         result.andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(
