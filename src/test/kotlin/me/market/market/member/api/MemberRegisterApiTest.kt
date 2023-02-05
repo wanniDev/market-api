@@ -28,6 +28,8 @@ class MemberRegisterApiTest: AbstractTest() {
                             .description("계좌 은행"),
                         PayloadDocumentation.fieldWithPath("accountNum").type(JsonFieldType.STRING)
                             .description("계좌 번호"),
+                        PayloadDocumentation.fieldWithPath("mobileCarrier").type(JsonFieldType.STRING)
+                            .description("휴대폰 통신사 이름"),
                         PayloadDocumentation.fieldWithPath("phoneNum").type(JsonFieldType.STRING)
                             .description("휴대폰 번호('-' 기호 포함)"),
                         PayloadDocumentation.fieldWithPath("passwd").type(JsonFieldType.STRING)
