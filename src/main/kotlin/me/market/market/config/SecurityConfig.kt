@@ -20,7 +20,7 @@ class SecurityConfig {
     }
 
     @Bean
-    @Profile(value = ["feature.join.local", "default"])
+    @Profile(value = ["default"])
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
 
         http.csrf().disable()
