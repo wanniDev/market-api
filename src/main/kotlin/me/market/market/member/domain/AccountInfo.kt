@@ -4,10 +4,10 @@ import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 
 @Embeddable
-class AccountInfo {
+class AccountInfo(
     @Column(nullable = false)
-    private val accountBank: String? = null
+    val accountBank: String,
 
     @Column(nullable = false)
-    private val accountNum: String? = null
-}
+    val accountNum: String
+)

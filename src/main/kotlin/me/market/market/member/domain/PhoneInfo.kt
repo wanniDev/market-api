@@ -4,10 +4,9 @@ import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 
 @Embeddable
-class PhoneInfo {
+class PhoneInfo(
     @Column(nullable = false)
-    val mobileCarrier: String? = null
-
+    val mobileCarrier: String,
     @Column(nullable = false)
-    val phoneNumber: String? = null
-}
+    val phoneNumber: String
+)
