@@ -1,10 +1,14 @@
 package me.market.market.member.api
 
 import me.market.market.AbstractTest
+import me.market.market.common.SimpleEntityFactory
 import me.market.market.common.API_URI_PREFIX
+import me.market.market.member.api.request.MemberLoginReq
 import me.market.market.member.api.request.MemberRegisterReq
 import me.market.market.member.domain.repository.MemberRepository
-import org.junit.jupiter.api.AfterAll
+import me.market.market.member.service.MemberService
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,21 +20,36 @@ import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-class MemberRegisterApiTest @Autowired constructor(private val memberRepository: MemberRepository): AbstractTest() {
+class MemberLoginApiTest @Autowired constructor(
+    private val memberRepository: MemberRepository,
+    private val memberService: MemberService
+) : AbstractTest() {
 
-    @AfterAll
+
+    @BeforeEach
+    fun init() {
+        memberService.registerNew(
+            SimpleEntityFactory.createMemberFrom(
+            MemberRegisterReq(
+                "신한은행", "111-111-111111",
+                "LGU+", "010-1234-5678",
+                "aaaabbbbaa")
+        ))
+    }
+
+    @AfterEach
     fun clear() {
         memberRepository.deleteAll()
     }
 
     @Test
     @DisplayName("회원가입 동작 테스트")
-    fun registerMemberTest() {
-        val joinRequest = MemberRegisterReq("신한은행", "111-111-111111", "LGU+", "010-1234-5678", "aaaabbbbaa")
-        val reqBody = objectMapper.writeValueAsString(joinRequest)
+    fun loginTest() {
+        val loginReq = MemberLoginReq(userId = "010-1234-5678", passwd = "aaaabbbbaa")
+        val reqBody = objectMapper.writeValueAsString(loginReq)
 
         val result = mockMvc.perform(
-            RestDocumentationRequestBuilders.post("$API_URI_PREFIX/member")
+            RestDocumentationRequestBuilders.post("$API_URI_PREFIX/member/login")
                 .content(reqBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -43,20 +62,14 @@ class MemberRegisterApiTest @Autowired constructor(private val memberRepository:
                     getDocumentRequest(),
                     Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
                     PayloadDocumentation.requestFields(
-                        PayloadDocumentation.fieldWithPath("accountBank").type(JsonFieldType.STRING)
-                            .description("계좌 은행"),
-                        PayloadDocumentation.fieldWithPath("accountNum").type(JsonFieldType.STRING)
-                            .description("계좌 번호"),
-                        PayloadDocumentation.fieldWithPath("mobileCarrier").type(JsonFieldType.STRING)
-                            .description("휴대폰 통신사 이름"),
-                        PayloadDocumentation.fieldWithPath("phoneNum").type(JsonFieldType.STRING)
-                            .description("휴대폰 번호('-' 기호 포함)"),
+                        PayloadDocumentation.fieldWithPath("userId").type(JsonFieldType.STRING)
+                            .description("로그인 아이디"),
                         PayloadDocumentation.fieldWithPath("passwd").type(JsonFieldType.STRING)
-                            .description("비밀번호(알파벳 3종류 이상 8자리 문자열, 혹은 2종류 이상 10자리 이내의 문자열)"),
+                            .description("로그인 패스워드")
                     ),
                     PayloadDocumentation.responseFields(
-                        PayloadDocumentation.fieldWithPath("success").type(JsonFieldType.BOOLEAN)
-                            .description("회원가입 성공 여부")
+                        PayloadDocumentation.fieldWithPath("token").type(JsonFieldType.STRING)
+                            .description("인증 토큰")
                     )
                 )
             )
