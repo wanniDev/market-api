@@ -1,5 +1,6 @@
 package me.market.market.config
 
+import me.market.market.common.API_URI_PREFIX
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -20,12 +21,14 @@ class SecurityConfig {
     }
 
     @Bean
-    @Profile(value = ["default"])
+    @Profile(value = ["feature.local.login", "default"])
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
 
         http.csrf().disable()
         http.headers().disable()
         http.authorizeHttpRequests()
+            .requestMatchers("$API_URI_PREFIX/test")
+            .hasRole("USER")
             .anyRequest().permitAll()
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
