@@ -30,6 +30,11 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+
+    /** jwt */
+    implementation("com.auth0:java-jwt:4.2.1")
+
+    /** rest docs */
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("org.springframework.restdocs:spring-restdocs-asciidoctor")
     asciidoctorExtensions("org.springframework.restdocs:spring-restdocs-asciidoctor")
