@@ -1,6 +1,6 @@
 package me.market.market.member.api
 
-import me.market.market.SimpleEntityFactory
+import me.market.market.common.SimpleEntityFactory
 import me.market.market.common.API_URI_PREFIX
 import me.market.market.member.api.request.MemberRegisterReq
 import me.market.market.member.api.response.MemberRegisterResp

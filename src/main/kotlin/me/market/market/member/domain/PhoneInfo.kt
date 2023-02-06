@@ -8,5 +8,5 @@ class PhoneInfo(
     @Column(nullable = false)
     val mobileCarrier: String,
     @Column(nullable = false)
-    val phoneNumber: String
+    val phoneNum: String
 )
