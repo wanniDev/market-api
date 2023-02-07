@@ -16,7 +16,7 @@ class Member(
 ) {
     fun newApiToken(jwtHelper: JWTHelper, roles: Array<String>, request: HttpServletRequest): String {
         return jwtHelper.newToken(
-            JWTHelper.Claims.of(id, roles, ClientIpFactory.getRequestIP(request)))
+            JWTHelper.Claims.of(id, roles, request))
     }
 
     @Id

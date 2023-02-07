@@ -5,6 +5,10 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.interfaces.DecodedJWT
+import jakarta.servlet.http.HttpServletRequest
+import me.market.market.common.ClientIpFactory
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 import java.util.*
 
 class JWTHelper(private val issuer: String, private val clientSecret: String, private val expirySeconds: Long, private val refreshSeconds: Long) {
@@ -70,11 +74,12 @@ class JWTHelper(private val issuer: String, private val clientSecret: String, pr
         }
 
         companion object {
-            fun of(userKey: Long?, roles: Array<out String?>, host: String?): Claims {
+            fun of(userKey: Long?, roles: Array<out String?>, request: HttpServletRequest?): Claims {
+
                 val claims = Claims()
                 claims.userKey = userKey
                 claims.roles = roles
-                claims.host = host
+                claims.host = if (request == null) "127.0.0.1" else ClientIpFactory.getRequestIP(request)
                 return claims
             }
         }

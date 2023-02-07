@@ -28,7 +28,8 @@ class JwtAuthenticationProvider: AuthenticationProvider {
             val authenticated = JwtAuthenticationToken(member.id!!, null,
                 AuthorityUtils.createAuthorityList("ROLE_USER")
             )
-            val token: String = member.newApiToken(jwtHelper, arrayOf("ROLE_USER"), (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request)
+            val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
+            val token: String = member.newApiToken(jwtHelper, arrayOf("ROLE_USER"), request)
             authenticated.details = token
             return authenticated
         } catch (e: MemberNotFoundException) {
