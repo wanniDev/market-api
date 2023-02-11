@@ -43,7 +43,7 @@ class MemberLoginApiTest @Autowired constructor(
     }
 
     @Test
-    @DisplayName("회원가입 동작 테스트")
+    @DisplayName("로그인 동작 테스트")
     fun loginTest() {
         val loginReq = MemberLoginReq(userId = "010-1234-5678", passwd = "aaaabbbbaa")
         val reqBody = objectMapper.writeValueAsString(loginReq)

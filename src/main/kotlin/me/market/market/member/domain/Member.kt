@@ -12,14 +12,20 @@ class Member(
     @Embedded
     val phoneInfo: PhoneInfo,
     @Column(nullable = false)
-    val passwd: String
+    var passwd: String
 ) {
     fun newApiToken(jwtHelper: JWTHelper, roles: Array<String>, request: HttpServletRequest): String {
         return jwtHelper.newToken(
             JWTHelper.Claims.of(id, roles, request))
     }
 
+    override fun toString(): String {
+        return "Member(accountInfo=$accountInfo, phoneInfo=$phoneInfo, passwd='$passwd', id=$id)"
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
+
+
 }

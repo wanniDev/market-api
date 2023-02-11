@@ -1,7 +1,6 @@
 package me.market.market.member.domain.repository
 
 import me.market.market.member.domain.Member
-import me.market.market.member.domain.PhoneInfo
 import org.springframework.data.jpa.repository.JpaRepository
 
 
