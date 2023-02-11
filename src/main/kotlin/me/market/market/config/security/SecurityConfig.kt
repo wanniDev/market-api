@@ -36,7 +36,7 @@ class SecurityConfig {
     }
 
     @Bean
-    @Profile(value = ["feature.local.memberinfo", "default"])
+    @Profile(value = ["default"])
     fun authenticationManager(http: HttpSecurity): AuthenticationManager {
         val authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder::class.java)
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider())
@@ -44,7 +44,7 @@ class SecurityConfig {
     }
 
     @Bean
-    @Profile(value = ["feature.local.memberinfo", "default"])
+    @Profile(value = ["default"])
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
 
         http.csrf().disable()
