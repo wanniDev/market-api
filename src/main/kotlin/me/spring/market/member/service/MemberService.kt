@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 import java.util.*
 
 @Service
@@ -24,9 +25,11 @@ class MemberService(
     fun registerNew(member: Member): Boolean {
         checkDuplicate(member)
         member.passwd = passwdEncoder.encode(member.passwd)
+        member.createTime = LocalDateTime.now()
         return  Objects.nonNull(memberRepository.save(member))
     }
 
+    @Transactional
     fun login(userId: String, passwd: String): String {
         val member = memberRepository.findByPhoneInfoPhoneNum (phoneNum = userId)
         val isPasswdMatches = passwdEncoder.matches(passwd, member.passwd)
@@ -34,6 +37,7 @@ class MemberService(
             throw MemberNotFoundException()
         }
         val authenticate = authenticationManager.authenticate(JwtAuthenticationToken(member, ""))
+        member.loginTime = LocalDateTime.now()
         return authenticate.details as String
     }
 

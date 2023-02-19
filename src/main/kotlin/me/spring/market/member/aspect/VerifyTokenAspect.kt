@@ -21,7 +21,7 @@ import java.util.Date
 @Component
 class VerifyTokenAspect(private val jwtProperty: JwtProperty, private val jwtHelper: JWTHelper) {
 
-    @Before("@annotation(me.market.market.annotaion.RequireToken)")
+    @Before("@annotation(me.spring.market.annotaion.RequireToken)")
     @Throws(Throwable::class)
     fun validateCaptcha(joinPoint: JoinPoint) {
         val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
