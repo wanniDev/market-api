@@ -44,7 +44,7 @@ class SecurityConfig {
     }
 
     @Bean
-    @Profile(value = ["default"])
+    @Profile(value = ["default", "feature.local.checkduplicate"])
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
 
         http.csrf().disable()
