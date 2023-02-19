@@ -3,6 +3,7 @@ package me.spring.market.member.service
 import me.spring.market.config.security.JwtAuthenticationToken
 import me.spring.market.member.domain.Member
 import me.spring.market.member.domain.repository.MemberRepository
+import me.spring.market.member.exception.DuplicatedMemberException
 import me.spring.market.member.exception.MemberNotFoundException
 import me.spring.market.member.infra.MemberTokenPayload
 import org.springframework.security.authentication.AuthenticationManager
@@ -21,6 +22,7 @@ class MemberService(
 
     @Transactional
     fun registerNew(member: Member): Boolean {
+        checkDuplicate(member)
         member.passwd = passwdEncoder.encode(member.passwd)
         return  Objects.nonNull(memberRepository.save(member))
     }
@@ -37,5 +39,11 @@ class MemberService(
 
     fun findMemberInfoFrom(payload: MemberTokenPayload): Member {
         return memberRepository.findMemberById(payload.userKey)
+    }
+
+
+    private fun checkDuplicate(member: Member) {
+        if (memberRepository.existsByPhoneInfoPhoneNum(member.passwd))
+            throw DuplicatedMemberException()
     }
 }

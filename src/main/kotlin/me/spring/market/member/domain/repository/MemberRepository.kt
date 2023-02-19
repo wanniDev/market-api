@@ -12,4 +12,6 @@ interface MemberRepository: JpaRepository<Member, Long> {
     fun findByPhoneInfoPhoneNumAndPasswd(phoneNum: String, passwd: String): Member
 
     fun findMemberById(id: Long): Member
+
+    fun existsByPhoneInfoPhoneNum(phoneNum: String): Boolean
 }
