@@ -17,7 +17,9 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
-    maven("https://plugins.gradle.org/m2/")
+    maven {
+        url = uri("https://plugins.gradle.org/m2/")
+    }
     mavenCentral()
 }
 
@@ -47,10 +49,10 @@ dependencies {
     testImplementation("org.springframework.restdocs:spring-restdocs-asciidoctor")
     asciidoctorExtensions("org.springframework.restdocs:spring-restdocs-asciidoctor")
 
-    implementation("com.querydsl:querydsl-jpa")
+    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     implementation("com.querydsl:querydsl-core")
-    implementation("com.querydsl:querydsl-apt:5.0.0")
-    kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
+    annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 }
 
 idea {
