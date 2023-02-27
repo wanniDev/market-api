@@ -1,7 +1,7 @@
 package me.spring.market.config.security
 
 import me.spring.market.member.domain.Member
-import me.spring.market.member.exception.MemberNotFoundException
+import me.spring.market.common.exception.MemberNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataAccessException
 import org.springframework.security.authentication.AuthenticationProvider

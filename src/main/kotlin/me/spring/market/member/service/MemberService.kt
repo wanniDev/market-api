@@ -3,8 +3,8 @@ package me.spring.market.member.service
 import me.spring.market.config.security.JwtAuthenticationToken
 import me.spring.market.member.domain.Member
 import me.spring.market.member.domain.repository.MemberRepository
-import me.spring.market.member.exception.DuplicatedMemberException
-import me.spring.market.member.exception.MemberNotFoundException
+import me.spring.market.common.exception.DuplicatedMemberException
+import me.spring.market.common.exception.MemberNotFoundException
 import me.spring.market.member.infra.MemberTokenPayload
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.crypto.password.PasswordEncoder

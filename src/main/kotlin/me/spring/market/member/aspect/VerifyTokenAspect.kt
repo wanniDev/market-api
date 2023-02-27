@@ -3,8 +3,8 @@ package me.spring.market.member.aspect
 import me.spring.market.config.security.JWTHelper
 import me.spring.market.config.security.JwtAuthenticationToken
 import me.spring.market.config.security.JwtProperty
-import me.spring.market.member.exception.EmptyTokenException
-import me.spring.market.member.exception.InvalidTokenException
+import me.spring.market.common.exception.EmptyTokenException
+import me.spring.market.common.exception.InvalidTokenException
 import me.spring.market.member.infra.MemberTokenPayload
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
